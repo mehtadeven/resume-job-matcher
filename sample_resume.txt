@@ -1,0 +1,19 @@
+Mehta Deven - IT Student, SAL College of Engineering, Ahmedabad
+
+Summary: Semester 3 Information Technology student building machine
+learning projects in Python. I train, evaluate and document real models
+with measured results.
+
+Projects:
+- Handwritten Digit Recognizer: compared SVM and Random Forest with
+  scikit-learn on 1,797 images. SVM reached 98.89% test accuracy.
+- Spam SMS Classifier: TF-IDF features with Logistic Regression to
+  separate spam from real messages, including OTP phishing detection.
+- Movie Recommender: content-based recommendations with pandas,
+  TF-IDF and cosine similarity over a 48-film dataset.
+- Text Summarizer: extractive summarisation using TF-IDF sentence
+  scoring, with adjustable summary length.
+
+Skills: Python, scikit-learn, pandas, NumPy, classification,
+natural language processing, TF-IDF, model evaluation, Git, GitHub,
+HTML, CSS, JavaScript.

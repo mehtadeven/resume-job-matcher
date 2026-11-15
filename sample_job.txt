@@ -1,0 +1,17 @@
+Machine Learning Intern - Job Description
+
+We are hiring a Machine Learning Intern to help build data products.
+
+Responsibilities:
+- Build and evaluate machine learning models in Python
+- Clean and prepare datasets with pandas and NumPy
+- Work on NLP tasks such as text classification and embeddings
+- Run experiments, track accuracy, and write clear reports
+- Use SQL to pull data and Docker to ship small services
+- Collaborate using Git and GitHub pull requests
+
+Requirements:
+- Strong Python and scikit-learn fundamentals
+- Understanding of classification, regression and model evaluation
+- Familiarity with deep learning basics and REST APIs is a plus
+- Good communication and documentation habits
