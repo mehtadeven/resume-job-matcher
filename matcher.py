@@ -56,12 +56,45 @@ def keyword_report(resume_text, job_text, top_n=15):
     return found, missing
 
 
+def save_chart(found, missing, output_path):
+    """Save a simple bar chart of found vs missing keywords."""
+    import matplotlib
+    matplotlib.use("Agg")
+    import matplotlib.pyplot as plt
+
+    total = len(found) + len(missing)
+    coverage = round(100 * len(found) / total, 1) if total else 0.0
+
+    fig, ax = plt.subplots(figsize=(7, 4))
+    fig.patch.set_facecolor("#F7F1E1")
+    ax.set_facecolor("#F7F1E1")
+    bars = ax.bar(["Found in resume", "Missing"],
+                  [len(found), len(missing)],
+                  color=["#0B3C5D", "#E3A82B"], width=0.55)
+    for bar, count in zip(bars, [len(found), len(missing)]):
+        ax.text(bar.get_x() + bar.get_width() / 2, bar.get_height() + 0.2,
+                str(count), ha="center", fontsize=13, fontweight="bold")
+    ax.set_ylim(0, max(len(found), len(missing)) + 2)
+    ax.set_ylabel("Keywords")
+    ax.set_title(f"Keyword coverage: {coverage}% ({len(found)} of {total} found)",
+                 fontsize=13, fontweight="bold", color="#0B3C5D")
+    plt.tight_layout()
+    plt.savefig(output_path, dpi=150)
+    print(f"Chart saved to {output_path}")
+
+
 def main():
-    if len(sys.argv) != 3:
-        print("Usage: python matcher.py <resume.txt> <job.txt>")
-        return
-    resume_text = open(sys.argv[1], encoding="utf-8").read()
-    job_text = open(sys.argv[2], encoding="utf-8").read()
+    import argparse
+
+    parser = argparse.ArgumentParser(description="Match a resume against a job description.")
+    parser.add_argument("resume", help="path to the resume text file")
+    parser.add_argument("job", help="path to the job description text file")
+    parser.add_argument("--chart", nargs="?", const="chart.png", default=None,
+                        help="also save a coverage chart PNG (default name: chart.png)")
+    args = parser.parse_args()
+
+    resume_text = open(args.resume, encoding="utf-8").read()
+    job_text = open(args.job, encoding="utf-8").read()
 
     found, missing = keyword_report(resume_text, job_text)
     total = len(found) + len(missing)
@@ -74,6 +107,9 @@ def main():
     print("  " + (", ".join(found) if found else "none"))
     print(f"\nKeywords missing ({len(missing)}):")
     print("  " + (", ".join(missing) if missing else "none"))
+
+    if args.chart:
+        save_chart(found, missing, args.chart)
 
 
 if __name__ == "__main__":
