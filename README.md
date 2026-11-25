@@ -2,7 +2,9 @@
 
 # Resume-Job Matcher
 
-![Python](https://img.shields.io/badge/Python-3.10+-3776AB?logo=python&logoColor=white) ![scikit-learn](https://img.shields.io/badge/scikit--learn-ML-F7931E?logo=scikitlearn&logoColor=white) [![License: MIT](https://img.shields.io/badge/License-MIT-green.svg)](LICENSE) ![Stars](https://img.shields.io/github/stars/mehtadeven/resume-job-matcher?style=social)
+[![Live demo](https://img.shields.io/badge/Live%20demo-try%20it%20in%20your%20browser-22d3ee?logo=googlechrome&logoColor=white)](https://mehtadeven.github.io/resume-job-matcher/) ![Python](https://img.shields.io/badge/Python-3.10+-3776AB?logo=python&logoColor=white) ![scikit-learn](https://img.shields.io/badge/scikit--learn-ML-F7931E?logo=scikitlearn&logoColor=white) [![License: MIT](https://img.shields.io/badge/License-MIT-green.svg)](LICENSE) ![Stars](https://img.shields.io/github/stars/mehtadeven/resume-job-matcher?style=social)
+
+**▶ [Try the live demo](https://mehtadeven.github.io/resume-job-matcher/)** — it runs in your browser, nothing to install.
 
 **Paste a resume and a job description — this tool scores the match and lists exactly which job keywords your resume is missing.**
 
@@ -78,6 +80,12 @@ python app.py
 ```
 
 Then open http://localhost:8000 — paste both texts into the page and get the same report in your browser. The web UI uses only Python's built-in server: no extra packages, nothing to configure.
+
+## Live demo
+
+**[mehtadeven.github.io/resume-job-matcher](https://mehtadeven.github.io/resume-job-matcher/)** — the same matcher, ported line by line to JavaScript in [`web/`](web/), so it runs in your browser and your resume never leaves the page. The sample files give the same **46.7% (7 of 15)** as the Python version.
+
+The browser version reads its stop-word lists and the sample texts from `web/matcher-data.js`, which `gen_web_data.py` generates from `matcher.py` — rerun it after changing `STOP_WORDS`. Every push to `main` redeploys the demo through [`.github/workflows/pages.yml`](.github/workflows/pages.yml).
 
 ## How it works
 

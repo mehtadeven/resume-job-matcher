@@ -1,0 +1,103 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Resume-Job Matcher — Live Demo · Deven Mehta</title>
+  <meta name="description" content="Paste a resume and a job description: TF-IDF scores the match and lists the job keywords your resume is missing. Runs entirely in your browser.">
+  <meta property="og:title" content="Resume-Job Matcher — Live Demo">
+  <meta property="og:description" content="See which job keywords your resume is missing. TF-IDF + cosine similarity, running in your browser.">
+  <link rel="icon" href="data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'><text y='.9em' font-size='90'>📄</text></svg>">
+  <link rel="stylesheet" href="style.css">
+</head>
+<body>
+  <header class="topbar">
+    <a class="brand" href="https://mehtadeven.github.io/">Deven<span>.</span>Mehta</a>
+    <nav>
+      <a href="https://mehtadeven.github.io/#projects">← All projects</a>
+      <a href="https://github.com/mehtadeven/resume-job-matcher">Source code ↗</a>
+    </nav>
+  </header>
+
+  <main class="wrap">
+    <section class="hero">
+      <p class="eyebrow">Project 01 · NLP · Live demo</p>
+      <h1>Resume-Job <span class="grad">Matcher</span></h1>
+      <p class="lede">Applicant-tracking systems screen resumes by keywords before a person reads them.
+        Paste your resume and a job post to see that screening: a match score and the exact keywords you're missing.</p>
+      <div class="chips">
+        <span class="chip info">TF-IDF keyword ranking</span>
+        <span class="chip info">cosine similarity</span>
+        <span class="chip">🔒 runs in your browser — nothing is uploaded</span>
+      </div>
+    </section>
+
+    <section class="card">
+      <div class="grid-2">
+        <div>
+          <label for="resume">Your resume</label>
+          <textarea id="resume" spellcheck="false" placeholder="Paste your resume text…"></textarea>
+        </div>
+        <div>
+          <label for="job">Job description</label>
+          <textarea id="job" spellcheck="false" placeholder="Paste the job post…"></textarea>
+        </div>
+      </div>
+      <div class="row">
+        <button id="check" type="button">Check my match →</button>
+        <button id="sample" class="ghost" type="button">Load sample</button>
+        <button id="clear" class="ghost" type="button">Clear</button>
+      </div>
+    </section>
+
+    <section id="result" class="card" hidden aria-live="polite">
+      <div class="stat-row">
+        <div class="stat">
+          <div class="lbl">Keyword coverage</div>
+          <div class="num" id="coverage">–</div>
+          <div class="meter"><span id="coverage-bar"></span></div>
+          <div class="note" id="coverage-detail"></div>
+        </div>
+        <div class="stat">
+          <div class="lbl">Overall text similarity</div>
+          <div class="num" id="similarity">–</div>
+          <div class="meter"><span id="similarity-bar"></span></div>
+          <div class="note">TF-IDF cosine similarity of the two texts</div>
+        </div>
+      </div>
+      <div class="grid-2 lists">
+        <div>
+          <h2>✅ You have <span class="count" id="found-count"></span></h2>
+          <div class="chips" id="found"></div>
+        </div>
+        <div>
+          <h2>⚠️ Missing <span class="count" id="missing-count"></span></h2>
+          <div class="chips" id="missing"></div>
+        </div>
+      </div>
+      <p class="note honest">Add a missing skill only if you truly have it — the goal is an honest resume that passes the first screening.</p>
+    </section>
+
+    <section class="card">
+      <h2>How it works</h2>
+      <p class="sub">The same steps as <code>matcher.py</code>, ported line by line to JavaScript.</p>
+      <ol class="steps">
+        <li><b>Rank the job's terms.</b> TF-IDF weights every word in the job post; common filler words are dropped.</li>
+        <li><b>Keep the top 15.</b> The highest-weighted terms become the keywords a screener would look for.</li>
+        <li><b>Check the resume.</b> Each keyword is marked found or missing.</li>
+        <li><b>Score the overlap.</b> Cosine similarity of the two TF-IDF vectors gives a second, overall score.</li>
+      </ol>
+      <p class="note">Run the Python version: <code>pip install -r requirements.txt</code> then <code>python matcher.py sample_resume.txt sample_job.txt</code>. The sample gives 46.7% (7 of 15) in both versions.</p>
+    </section>
+  </main>
+
+  <footer class="site">
+    <span>Built by <a href="https://mehtadeven.github.io/">Deven Mehta</a> · AI/ML builder · Ahmedabad</span>
+    <a href="https://github.com/mehtadeven/resume-job-matcher">github.com/mehtadeven/resume-job-matcher</a>
+  </footer>
+
+  <script src="tfidf.js"></script>
+  <script src="matcher-data.js"></script>
+  <script src="app.js"></script>
+</body>
+</html>
