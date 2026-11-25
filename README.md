@@ -1,10 +1,14 @@
-![Resume-Job Matcher](assets/banner.svg)
+[![Resume-Job Matcher — try the live demo](assets/readme/banner.png)](https://mehtadeven.github.io/resume-job-matcher/)
 
 # Resume-Job Matcher
 
 [![Live demo](https://img.shields.io/badge/Live%20demo-try%20it%20in%20your%20browser-22d3ee?logo=googlechrome&logoColor=white)](https://mehtadeven.github.io/resume-job-matcher/) ![Python](https://img.shields.io/badge/Python-3.10+-3776AB?logo=python&logoColor=white) ![scikit-learn](https://img.shields.io/badge/scikit--learn-ML-F7931E?logo=scikitlearn&logoColor=white) [![License: MIT](https://img.shields.io/badge/License-MIT-green.svg)](LICENSE) ![Stars](https://img.shields.io/github/stars/mehtadeven/resume-job-matcher?style=social)
 
-**▶ [Try the live demo](https://mehtadeven.github.io/resume-job-matcher/)** — it runs in your browser, nothing to install.
+<p align="center">
+  <a href="https://mehtadeven.github.io/resume-job-matcher/"><b>▶ Try the live demo</b></a> &nbsp;·&nbsp;
+  <a href="#how-it-works">How it works</a> &nbsp;·&nbsp;
+  <a href="https://mehtadeven.github.io/">Portfolio</a>
+</p>
 
 **Paste a resume and a job description — this tool scores the match and lists exactly which job keywords your resume is missing.**
 
@@ -82,6 +86,10 @@ python app.py
 Then open http://localhost:8000 — paste both texts into the page and get the same report in your browser. The web UI uses only Python's built-in server: no extra packages, nothing to configure.
 
 ## Live demo
+
+[![Screenshot of the Resume-Job Matcher live demo](assets/readme/demo.png)](https://mehtadeven.github.io/resume-job-matcher/)
+
+**Design:** a *recruiter's desk* theme — warm paper sheets with tape, Fraunces serif headlines, IBM Plex Sans/Mono, yellow highlighter on the keywords you have and red-pencil circles on the ones you're missing, plus a rubber-stamp score.
 
 **[mehtadeven.github.io/resume-job-matcher](https://mehtadeven.github.io/resume-job-matcher/)** — the same matcher, ported line by line to JavaScript in [`web/`](web/), so it runs in your browser and your resume never leaves the page. The sample files give the same **46.7% (7 of 15)** as the Python version.
 

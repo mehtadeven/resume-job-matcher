@@ -5,94 +5,104 @@
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>Resume-Job Matcher — Live Demo · Deven Mehta</title>
   <meta name="description" content="Paste a resume and a job description: TF-IDF scores the match and lists the job keywords your resume is missing. Runs entirely in your browser.">
+  <meta name="theme-color" content="#f4efe4">
   <meta property="og:title" content="Resume-Job Matcher — Live Demo">
   <meta property="og:description" content="See which job keywords your resume is missing. TF-IDF + cosine similarity, running in your browser.">
+  <meta property="og:image" content="https://raw.githubusercontent.com/mehtadeven/resume-job-matcher/main/assets/readme/banner.png">
   <link rel="icon" href="data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'><text y='.9em' font-size='90'>📄</text></svg>">
+  <link rel="preload" href="fonts/fraunces-latin-wght-normal.woff2" as="font" type="font/woff2" crossorigin>
   <link rel="stylesheet" href="style.css">
 </head>
 <body>
-  <header class="topbar">
-    <a class="brand" href="https://mehtadeven.github.io/">Deven<span>.</span>Mehta</a>
+  <header class="letterhead">
+    <a class="brand" href="https://mehtadeven.github.io/">Deven Mehta <span>· portfolio</span></a>
     <nav>
-      <a href="https://mehtadeven.github.io/#projects">← All projects</a>
+      <a href="https://mehtadeven.github.io/#projects">All projects</a>
       <a href="https://github.com/mehtadeven/resume-job-matcher">Source code ↗</a>
     </nav>
   </header>
 
-  <main class="wrap">
+  <main class="desk">
     <section class="hero">
-      <p class="eyebrow">Project 01 · NLP · Live demo</p>
-      <h1>Resume-Job <span class="grad">Matcher</span></h1>
+      <p class="kicker">Project 01 · NLP · Live demo</p>
+      <h1>Resume–Job <em>Matcher</em></h1>
       <p class="lede">Applicant-tracking systems screen resumes by keywords before a person reads them.
-        Paste your resume and a job post to see that screening: a match score and the exact keywords you're missing.</p>
-      <div class="chips">
-        <span class="chip info">TF-IDF keyword ranking</span>
-        <span class="chip info">cosine similarity</span>
-        <span class="chip">🔒 runs in your browser — nothing is uploaded</span>
+        Paste your resume and a job post to see that screening: a match score, and the exact keywords you're missing.</p>
+      <p class="privacy">🔒 Runs in your browser. Nothing is uploaded.</p>
+    </section>
+
+    <section class="sheets">
+      <div class="sheet">
+        <span class="tape" aria-hidden="true"></span>
+        <label for="resume"><span class="no">A</span> Your resume</label>
+        <textarea id="resume" spellcheck="false" placeholder="Paste your resume text…"></textarea>
+      </div>
+      <div class="sheet tilt">
+        <span class="tape" aria-hidden="true"></span>
+        <label for="job"><span class="no">B</span> Job description</label>
+        <textarea id="job" spellcheck="false" placeholder="Paste the job post…"></textarea>
       </div>
     </section>
 
-    <section class="card">
-      <div class="grid-2">
+    <div class="actions">
+      <button id="check" type="button">Screen my resume →</button>
+      <button id="sample" class="link" type="button">Load sample</button>
+      <button id="clear" class="link" type="button">Clear</button>
+    </div>
+
+    <section id="result" class="report" hidden aria-live="polite">
+      <header class="report-head">
         <div>
-          <label for="resume">Your resume</label>
-          <textarea id="resume" spellcheck="false" placeholder="Paste your resume text…"></textarea>
+          <p class="kicker">Screening report</p>
+          <h2>How an ATS would read your resume</h2>
+        </div>
+        <div class="stamp" aria-label="Keyword coverage">
+          <span class="stamp-num" id="coverage">–</span>
+          <span class="stamp-lbl">keyword match</span>
+        </div>
+      </header>
+
+      <div class="figures">
+        <div>
+          <p class="fig-lbl">Keyword coverage</p>
+          <div class="rule"><span id="coverage-bar"></span></div>
+          <p class="fig-note" id="coverage-detail"></p>
         </div>
         <div>
-          <label for="job">Job description</label>
-          <textarea id="job" spellcheck="false" placeholder="Paste the job post…"></textarea>
+          <p class="fig-lbl">Overall text similarity · <strong id="similarity">–</strong></p>
+          <div class="rule"><span id="similarity-bar"></span></div>
+          <p class="fig-note">TF-IDF cosine similarity of the two texts</p>
         </div>
       </div>
-      <div class="row">
-        <button id="check" type="button">Check my match →</button>
-        <button id="sample" class="ghost" type="button">Load sample</button>
-        <button id="clear" class="ghost" type="button">Clear</button>
+
+      <div class="columns">
+        <div>
+          <h3>Highlighted — you have <span id="found-count"></span></h3>
+          <div class="marks" id="found"></div>
+        </div>
+        <div>
+          <h3>Circled — missing <span id="missing-count"></span></h3>
+          <div class="marks" id="missing"></div>
+        </div>
       </div>
+      <p class="footnote">Add a missing skill only if you truly have it. The goal is an honest resume that passes the first screening.</p>
     </section>
 
-    <section id="result" class="card" hidden aria-live="polite">
-      <div class="stat-row">
-        <div class="stat">
-          <div class="lbl">Keyword coverage</div>
-          <div class="num" id="coverage">–</div>
-          <div class="meter"><span id="coverage-bar"></span></div>
-          <div class="note" id="coverage-detail"></div>
-        </div>
-        <div class="stat">
-          <div class="lbl">Overall text similarity</div>
-          <div class="num" id="similarity">–</div>
-          <div class="meter"><span id="similarity-bar"></span></div>
-          <div class="note">TF-IDF cosine similarity of the two texts</div>
-        </div>
-      </div>
-      <div class="grid-2 lists">
-        <div>
-          <h2>✅ You have <span class="count" id="found-count"></span></h2>
-          <div class="chips" id="found"></div>
-        </div>
-        <div>
-          <h2>⚠️ Missing <span class="count" id="missing-count"></span></h2>
-          <div class="chips" id="missing"></div>
-        </div>
-      </div>
-      <p class="note honest">Add a missing skill only if you truly have it — the goal is an honest resume that passes the first screening.</p>
-    </section>
-
-    <section class="card">
+    <section class="method">
       <h2>How it works</h2>
-      <p class="sub">The same steps as <code>matcher.py</code>, ported line by line to JavaScript.</p>
-      <ol class="steps">
-        <li><b>Rank the job's terms.</b> TF-IDF weights every word in the job post; common filler words are dropped.</li>
-        <li><b>Keep the top 15.</b> The highest-weighted terms become the keywords a screener would look for.</li>
-        <li><b>Check the resume.</b> Each keyword is marked found or missing.</li>
-        <li><b>Score the overlap.</b> Cosine similarity of the two TF-IDF vectors gives a second, overall score.</li>
+      <p class="method-sub">The same four steps as <code>matcher.py</code>, ported line by line to JavaScript.</p>
+      <ol>
+        <li><strong>Rank the job's terms.</strong> TF-IDF weights every word in the job post; filler words are dropped.</li>
+        <li><strong>Keep the top 15.</strong> The highest-weighted terms are the keywords a screener looks for.</li>
+        <li><strong>Check the resume.</strong> Each keyword is marked as found or missing.</li>
+        <li><strong>Score the overlap.</strong> Cosine similarity of the two TF-IDF vectors gives a second, overall score.</li>
       </ol>
-      <p class="note">Run the Python version: <code>pip install -r requirements.txt</code> then <code>python matcher.py sample_resume.txt sample_job.txt</code>. The sample gives 46.7% (7 of 15) in both versions.</p>
+      <p class="method-sub">Python version: <code>python matcher.py sample_resume.txt sample_job.txt</code>. The sample scores 46.7% (7 of 15) in both versions.</p>
     </section>
   </main>
 
-  <footer class="site">
-    <span>Built by <a href="https://mehtadeven.github.io/">Deven Mehta</a> · AI/ML builder · Ahmedabad</span>
+  <footer class="colophon">
+    <span>Built by <a href="https://mehtadeven.github.io/">Deven Mehta</a>, Ahmedabad</span>
     <a href="https://github.com/mehtadeven/resume-job-matcher">github.com/mehtadeven/resume-job-matcher</a>
   </footer>
 
